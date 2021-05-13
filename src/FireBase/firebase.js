@@ -6,5 +6,5 @@ const firebaseConfig = {
   storageBucket: "challenge-2b45d.appspot.com",
   messagingSenderId: "77645371857",
   appId: "1:77645371857:web:7a917831f25a28400228f0",
-  measurementId: "G-6X5FWY5TXQ"
+  measurementId: "G-6X5FWY5TXQ",
 };
