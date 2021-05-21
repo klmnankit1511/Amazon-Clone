@@ -1,16 +1,36 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./Login.css"
+import { Link, useHistory } from "react-router-dom";
+import { auth } from "../../firebase";
+import "./Login.css";
 function Login() {
-    const [email,setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const signIn = (e)=>{
-        e.preventDefault();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const his = useHistory();
+  const signIn = (e) => {
+    e.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((auth) => {
+        // console.log(auth);
+        if (auth) {
+          his.push("/");
+        }
+      })
+      .catch((err) => alert(err.message));
+  };
+  const register = (e) => {
+    e.preventDefault();
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((auth) => {
+        // console.log(auth);
+        if (auth) {
+          his.push("/");
+        }
+      })
+      .catch((err) => alert(err.message));
+  };
 
-    }
-    const register = (e)=>{
-        e.preventDefault();
-    };
   return (
     <div className="login">
       <Link to="/">
@@ -35,9 +55,15 @@ function Login() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-           />
+          />
 
-          <button type="submit" onClick = {signIn} className="login__signInButton">Sign In</button>
+          <button
+            type="submit"
+            onClick={signIn}
+            className="login__signInButton"
+          >
+            Sign In
+          </button>
         </form>
         <p>
           By signing-in you agree to the AMAZON FAKE CLONE Conditions of use &
