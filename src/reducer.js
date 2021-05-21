@@ -1,5 +1,6 @@
 export const initalState = {
-    basket:[]
+    basket:[],
+    user:null
 };
 //Selector
 export const getBasketTotal = (basket) => {
@@ -26,7 +27,11 @@ const reducer = (state,action)=>{
                 ...state,
                 basket:newBakset
             }
-            
+        case "SET_USER":
+            return {
+                ...state,
+                user:action.user
+            }    
         default:
             return state;    
     }
