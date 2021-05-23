@@ -15,9 +15,9 @@ function Payment() {
   const elements = useElements();
 
   const [error, setError] = useState();
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [succeeded, setSucceeded] = useState(false);
-  const [processing, setProcessing] = useState("");
+  const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState(true);
 
   useEffect(() => {
@@ -30,6 +30,7 @@ function Payment() {
     };
     getClientSecret();
   }, [state.basket]);
+  console.log(clientSecret);
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     setProcessing(true);
