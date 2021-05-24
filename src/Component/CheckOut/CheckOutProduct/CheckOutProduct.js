@@ -15,7 +15,7 @@ function CheckOutProduct(props) {
       <div className="checkoutProduct__info">
         <p className="checkoutProduct__title">{props.title}</p>
         <p className="checkoutProduct__price">
-          <small>$</small>
+          <small>₹</small>
           <strong>{props.price}</strong>
         </p>
         <div className="checkoutProduct__rating">
@@ -25,8 +25,9 @@ function CheckOutProduct(props) {
               <p>⭐️</p>
             ))}
         </div>
-        <button
-        onClick= {removeFromBasket}>Remove from Basket</button>
+        {!props.hidebtn && (
+          <button onClick={removeFromBasket}>Remove from Basket</button>
+        )}
       </div>
     </div>
   );

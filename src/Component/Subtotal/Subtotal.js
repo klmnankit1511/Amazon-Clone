@@ -25,9 +25,15 @@ function Subtotal() {
         value={getBasketTotal(state.basket)}
         displayType={"text"}
         thousandSeparator={true}
-        prefix={"$"}
+        prefix={"₹"}
       />
-      <button onClick = {e => his.push("/payment")}>Processed to checkout</button>
+
+      <button
+        disabled={state.basket.length != 0?false:true}
+        onClick={(e) => his.push("/payment")}
+      >
+        Processed to checkout
+      </button>
     </div>
   );
 }

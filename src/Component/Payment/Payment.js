@@ -7,28 +7,31 @@ import CheckOutProduct from "../CheckOut/CheckOutProduct/CheckOutProduct";
 import { getBasketTotal } from "../../reducer";
 import axios from "../Axios/Axios";
 import "./Payment.css";
+import { db } from "../../firebase";
 
 function Payment() {
   const history = useHistory();
   const [state, dispatch] = useStateValue();
   const stripe = useStripe();
   const elements = useElements();
-
   const [error, setError] = useState();
   const [disabled, setDisabled] = useState(false);
   const [succeeded, setSucceeded] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState(true);
-
+ var amt = getBasketTotal(state.basket);
   useEffect(() => {
+    
     const getClientSecret = async () => {
       const response = await axios({
         method: "post",
-        url: `/payment/create?total=${getBasketTotal(state.basket) * 100}`,
+        url: `/payment/create?total=${amt * 100}`,
       });
       setClientSecret(response.data.clientSecret);
     };
-    getClientSecret();
+    if (amt != 0) {
+      getClientSecret();
+    }
   }, [state.basket]);
   console.log(clientSecret);
   const handleSubmit = async (evt) => {
@@ -42,9 +45,21 @@ function Payment() {
         },
       })
       .then(({ paymentIntent }) => {
+        db.collection("users")
+          .doc(state.user?.uid)
+          .collection("orders")
+          .doc(paymentIntent.id)
+          .set({
+            basket: state.basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+        dispatch({
+          type: "EMPTY_BASKET",
+        });
         history.replace("/order");
       });
   };
@@ -99,9 +114,12 @@ function Payment() {
                   value={getBasketTotal(state.basket)}
                   displayType={"text"}
                   thousandSeparator={true}
-                  prefix={"$"}
+                  prefix={"₹"}
                 />
-                <button disabled={processing || disabled || succeeded}>
+                <button
+                  type="submit"
+                  disabled={processing || disabled || succeeded || state.basket.length==0}
+                >
                   <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
                 </button>
               </div>

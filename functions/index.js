@@ -10,18 +10,18 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/",  (req, res)=> {
   res.status(200).send("hello world");
 });
 
 app.post("/payment/create", async (req, res) => {
+  
   const total = req.query.total;
 
   console.log("total", total);
-
-  const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await stripe.paymentIntents.create({
     amount: total,
-    currency: "usd",
+    currency: "inr",
   });
   res.status(201).send({
     clientSecret: paymentIntent.client_secret,
