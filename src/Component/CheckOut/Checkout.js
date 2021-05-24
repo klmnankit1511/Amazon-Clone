@@ -17,7 +17,12 @@ function Checkout() {
         />
         <div className="">
           <h3>Hello,{state.user?.email}</h3>
-          <h2 className="checkout__title">Your Shopping Basket</h2>
+          {state.basket?.length == 0 ? (
+            <h2 className="checkout__title">Empty Card List</h2>
+          ) : (
+            <h2 className="checkout__title">Your Shopping Basket</h2>
+          )}
+
           {state.basket.map((item) => (
             <CheckOutProduct
               id={item.id}
@@ -29,8 +34,13 @@ function Checkout() {
           ))}
         </div>
       </div>
+
       <div className="checkout__right">
-        <Subtotal></Subtotal>
+        {state.basket?.length == 0 ? (
+          <Subtotal hidebtn/>
+        ) : (
+          <Subtotal></Subtotal>
+        )}
       </div>
     </div>
   );

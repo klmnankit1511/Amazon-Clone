@@ -62,7 +62,9 @@ function Payment() {
         history.replace("/order");
       });
   };
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+
+  };
   return (
     <div className="payment">
       <div className="payment__container">
@@ -124,7 +126,7 @@ function Payment() {
                     state.basket.length == 0
                   }
                 >
-                  <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
+                  <span>{processing ? "Processing" : "Buy Now"}</span>
                 </button>
               </div>
               {error ? "" : error}
