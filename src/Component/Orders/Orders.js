@@ -4,36 +4,37 @@ import { StateProvider, useStateValue } from "../../StateProvider";
 import Order from "./Order/Order";
 import "./Orders.css";
 function Orders() {
-    console.log("Hello");
+  console.log("Hello");
   const [state, dispatch] = useStateValue();
-  
+
   const [orders, setOrders] = useState([]);
   useEffect(() => {
-      if(state.user){
-          db.collection("users")
-            .doc(state.user?.uid)
-            .collection("orders")
-            .orderBy("created", "desc")
-            .onSnapshot((snapshot) => {
-              setOrders(
-                snapshot.docs.map((doc) => ({
-                  id: doc.id,
-                  data: doc.data(),
-                }))
-              );
-            });
-      }else{
-          setOrders([])
-      }
-
+    if (state.user) {
+      db.collection("users")
+        .doc(state.user?.uid)
+        .collection("orders")
+        .orderBy("created", "desc")
+        .onSnapshot((snapshot) => {
+          setOrders(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          );
+        });
+    } else {
+      setOrders([]);
+    }
   }, [state.user]);
-  return <div className="orders">
+  return (
+    <div className="orders">
       <div className="orders__order">
-        {orders?.map((order)=>(
-            <Order order={order} />
+        {orders?.map((order) => (
+          <Order order={order} />
         ))}
       </div>
-  </div>;
+    </div>
+  );
 }
 
 export default Orders;

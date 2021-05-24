@@ -2,11 +2,9 @@ import React from "react";
 import { useStateValue } from "../../StateProvider";
 import "./Product.css";
 function Product(props) {
-  
-  const [state,dispatch] = useStateValue();
-  
-  const addtobasket = () =>{
-    
+  const [state, dispatch] = useStateValue();
+
+  const addtobasket = () => {
     dispatch({
       type: "ADD_TO_BASKET",
       item: {
@@ -17,7 +15,7 @@ function Product(props) {
         rating: props.rating,
       },
     });
-  }
+  };
 
   return (
     <div className="product">

@@ -19,9 +19,8 @@ function Payment() {
   const [succeeded, setSucceeded] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState(true);
- var amt = getBasketTotal(state.basket);
+  var amt = getBasketTotal(state.basket);
   useEffect(() => {
-    
     const getClientSecret = async () => {
       const response = await axios({
         method: "post",
@@ -118,7 +117,12 @@ function Payment() {
                 />
                 <button
                   type="submit"
-                  disabled={processing || disabled || succeeded || state.basket.length==0}
+                  disabled={
+                    processing ||
+                    disabled ||
+                    succeeded ||
+                    state.basket.length == 0
+                  }
                 >
                   <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
                 </button>
