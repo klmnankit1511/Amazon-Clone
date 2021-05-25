@@ -1,9 +1,17 @@
 #Set Up
-terminal 1 npm install
+
+terminal 1 
+
+npm install
+
 then npm start
 
-terminal 2 cd functions
+terminal 2 
+
+cd functions
+
 npm install
+
 firebase emulator:start
 
 
